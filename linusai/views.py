@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status,serializers
 # from api.models import Application_permission
+
+def login_page(request):
+    return render(request,"index.html")
 
 @api_view(["POST"])
 def register(request):
@@ -17,7 +21,7 @@ def register(request):
     #     print(email)
     #     return Response("user already exists")
     User.objects.create(username=name,email= email, password = password)
-    return Response({"name":name,"email":email})
+    return Response({"name":name,"email":email},status=status.HTTP_201_CREATED)
 
 @api_view(["POST"])
 def user_login(request):
